@@ -84,6 +84,29 @@ namespace game_framework {
 		int x, y;
 	};
 
+	// 這個Class提供地圖的構成
+
+	class CGameMap {
+	public:
+		CGameMap();
+		void LoadBitmap();				// 載入地圖
+		void OnShow();					// 顯示地圖
+
+		void OnMove();					//播放彈跳球動畫
+		void OnKeyDown(UINT);			//處理按鍵按下後的反應
+		void RandomBouncingBall();		//隨機彈跳球個數加入倒Map中
+		void InitializeBouncingBall(int, int, int);	//初始化彈跳球
+		~CGameMap();					//解構子
+	protected:
+		CMovingBitmap blue, green;		// 建立藍色地圖和綠色地圖
+		int map[4][5];					// 建立一個地圖矩陣的index
+		const int X, Y;					// 大地圖的左上角x, y座標
+		const int MW, MH;				// 每張小地圖的寬高度
+
+		CBouncingBall* bballs;			//CBouncingBall指標
+		int random_num;					//隨機個數
+	};
+
 
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -108,6 +131,8 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
+		CGameMap		gamemap;	// 地圖
+
 		const int		NUMBALLS;	// 球的總數
 		CMovingBitmap	background;	// 背景圖
 		CMovingBitmap	help;		// 說明圖

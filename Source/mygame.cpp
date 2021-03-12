@@ -184,6 +184,111 @@ void CGameStateOver::OnShow()
 	CDDraw::ReleaseBackCDC();					// 放掉 Back Plain 的 CDC
 }
 
+
+// 地圖
+
+CGameMap::CGameMap() 
+:X(20), Y(40), MW(120), MH(100)					// 給予地圖上左上角座標及每張小圖寬高
+{
+	int map_init[4][5] = {
+		{0, 0, 1, 0, 0},
+		{0, 1, 2, 1, 0},
+		{1, 2, 1, 2, 1},
+		{2, 1, 2, 1, 2}};
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 5; j++)
+			map[i][j] = map_init[i][j];
+
+	random_num = 0;					//初始化隨機個數
+}
+
+void CGameMap::LoadBitmap()
+{
+	blue.LoadBitmap(IDB_BLUE);
+	green.LoadBitmap(IDB_GREEN);
+}
+
+void CGameMap::OnShow()
+{
+	for (int i = 0; i < 5; i++)
+		for (int j = 0; j < 4; j++)
+		{
+			switch (map[j][i]) {
+			case 0:
+				break;
+			case 1:
+				blue.SetTopLeft(X + (MW * i), Y + (MH * j));
+				blue.ShowBitmap();
+				break;
+			case 2:
+				green.SetTopLeft(X + (MW * i), Y + (MH * j));
+				green.ShowBitmap();
+				break;
+			default:
+				ASSERT(0);										//map陣列不該出現0, 1, 2以外的值
+			}
+		}
+
+	for (int i = 0; i < random_num; i++)
+	{
+		bballs[i].OnShow();
+	}
+}
+
+void CGameMap::InitializeBouncingBall(int ini_index, int row, int col)
+{
+	const int VELOCITY = 10;							//球的起始上升速度
+	const int BAIL_PIC_HEIGHT = 15;						//求圖片的高度
+	int floor = Y + (row + 1) * MH - BAIL_PIC_HEIGHT;	//設定球落下點為Map的下方
+
+	bballs[ini_index].LoadBitmap();								//載入彈跳球動畫
+	bballs[ini_index].SetFloor(floor);							//設定彈跳的起始水平面
+	bballs[ini_index].SetVelocity(VELOCITY + col);				//設定彈跳的初始速度，越右邊的彈的越高
+	bballs[ini_index].SetXY(X + col * MW + MW / 2, floor);		//設定球的起始位置X座標為該Map一半的位置
+}
+
+void CGameMap::RandomBouncingBall()
+{
+	const int MAX_RAND_NUM = 10;	//隨機最大值
+	random_num = (rand() % MAX_RAND_NUM) + 1;	//隨機1~MAX_RAND_NUM
+
+	delete[] bballs;							//先刪掉之前所配置的空間
+	bballs = new CBouncingBall[random_num];		//根據隨機值動態配置CBouncingBall陣列
+	int ini_index = 0;							//初始化陣列索引
+	for (int row = 0; row < 4; row++)
+	{
+		for (int col = 0; col < 5; col++)
+		{
+			if (map[row][col] != 0 && ini_index < random_num)	//只放球在有色的地圖且初始化的陣列索引必小於隨機的個數
+			{
+				InitializeBouncingBall(ini_index, row, col);
+				ini_index++;									//初始化的陣列索引加一
+			}
+		}
+	}
+}
+
+void CGameMap::OnKeyDown(UINT nChar)
+{
+	const int KEY_SPACE = 0x20;
+	if (nChar == KEY_SPACE)
+		RandomBouncingBall();	//當空白鍵按下後隨機彈跳球
+}
+
+void CGameMap::OnMove()
+{
+	for (int i = 0; i < random_num; i++)
+	{
+		bballs[i].OnMove();
+	}
+}
+
+CGameMap::~CGameMap()
+{
+	delete[] bballs;
+}
+
+
 /////////////////////////////////////////////////////////////////////////////
 // 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
 /////////////////////////////////////////////////////////////////////////////
@@ -230,6 +335,9 @@ void CGameStateRun::OnBeginState()
 
 void CGameStateRun::OnMove()							// 移動遊戲元素
 {
+	//bouncingMap RAND
+	gamemap.OnMove();
+
 	//sadFace.SetTopLeft(300, 50);
 	if (sadX <= SIZE_Y) {
 		sadX += 5;
@@ -291,7 +399,9 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//練習載入臉
 	sadFace.LoadBitmap("Bitmaps\\sad.bmp", RGB(0,0,0));	//LoadBitmap(fileNAme, 指定為透明的顏色)
 	Map.LoadBitmap();
-	
+
+	//練習載入地圖的圖形
+	gamemap.LoadBitmap();
 
 	//
 	// 當圖很多時，OnInit載入所有的圖要花很多時間。為避免玩遊戲的人
@@ -341,6 +451,8 @@ void CGameStateRun::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		eraser.SetMovingUp(true);
 	if (nChar == KEY_DOWN)
 		eraser.SetMovingDown(true);
+
+	gamemap.OnKeyDown(nChar);
 }
 
 void CGameStateRun::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
@@ -386,6 +498,10 @@ void CGameStateRun::OnRButtonUp(UINT nFlags, CPoint point)	// 處理滑鼠的動作
 
 void CGameStateRun::OnShow()
 {
+	//貼上地圖
+	gamemap.OnShow();
+
+
 	//
 	//  注意：Show裡面千萬不要移動任何物件的座標，移動座標的工作應由Move做才對，
 	//        否則當視窗重新繪圖時(OnDraw)，物件就會移動，看起來會很怪。換個術語
@@ -412,6 +528,8 @@ void CGameStateRun::OnShow()
 	//showface
 	sadFace.ShowBitmap();
 	Map.OnShow();
+
+
 }
 
 CPractice::CPractice() {

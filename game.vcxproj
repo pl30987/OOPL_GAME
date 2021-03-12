@@ -325,6 +325,8 @@
   <ItemGroup>
     <Image Include="res\bitmap3.bmp" />
     <Image Include="res\bitmap4.bmp" />
+    <Image Include="RES\blue_map.bmp" />
+    <Image Include="RES\green_map .bmp" />
     <Image Include="RES\smile.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

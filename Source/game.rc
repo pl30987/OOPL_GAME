@@ -104,6 +104,10 @@ IDB_HELP                BITMAP                  "..\\res\\help.bmp"
 
 IDB_LOADING             BITMAP                  "..\\res\\loading.bmp"
 
+IDB_BLUE                BITMAP                  "C:\\Users\\zhnzh\\Desktop\\ooplGame\\RES\\blue_map.bmp"
+
+IDB_GREEN               BITMAP                  "C:\\Users\\zhnzh\\Desktop\\ooplGame\\RES\\green_map .bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //

@@ -183,5 +183,11 @@
     <Image Include="RES\smile.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="RES\blue_map.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="RES\green_map .bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
