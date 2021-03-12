@@ -200,6 +200,7 @@ CGameMap::CGameMap()
 			map[i][j] = map_init[i][j];
 
 	random_num = 0;					//初始化隨機個數
+	bballs = NULL;
 }
 
 void CGameMap::LoadBitmap()
