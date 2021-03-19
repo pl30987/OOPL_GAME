@@ -21,11 +21,11 @@ namespace game_framework {
 		void SetXY(int nx, int ny);		// 設定擦子左上角座標
 	private:
 		//		madeline
-		CMovingBitmap SpriteStand;
-		CMovingBitmap SpriteLookUp;
-		CMovingBitmap SpriteLookDown;
-		CAnimation SpriteLeft;
-		CAnimation SpriteRight;
+		CMovingBitmap SpriteStand;			//靜止
+		CMovingBitmap SpriteLookUp;			//向上看
+		CMovingBitmap SpriteLookDown;		//向下看
+		CAnimation SpriteLeft;				//往左
+		CAnimation SpriteRight;				//往右
 
 
 		int x, y;					// 擦子左上角座標
