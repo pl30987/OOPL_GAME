@@ -42,6 +42,8 @@
 #include "CBall.h"
 #include "CBouncingBall.h"
 
+#include "Character_madeline.h"
+
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
 	// Constants
@@ -70,6 +72,7 @@ namespace game_framework {
 	private:
 		CMovingBitmap logo;								// csie的logo
 	};
+
 
 	//用物件包裝
 	class CPractice {
@@ -145,6 +148,9 @@ namespace game_framework {
 		CMovingBitmap	sadFace;	// QQ臉
 		int				sadX, sadY;
 		CPractice		Map;		//變成地圖物件了!!
+
+		Character_madeline		Character_madeline;		//主角madeline	玩家控制角色
+
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
