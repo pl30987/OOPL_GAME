@@ -18,13 +18,6 @@ namespace game_framework {
 		x = y = dx = dy = index = delay_counter = 0;
 	}
 
-	bool CBall::HitEraser(CEraser *eraser)
-	{
-		// 檢測擦子所構成的矩形是否碰到球
-		return HitRectangle(eraser->GetX1(), eraser->GetY1(),
-			eraser->GetX2(), eraser->GetY2());
-	}
-
 	bool CBall::HitRectangle(int tx1, int ty1, int tx2, int ty2)
 	{
 		int x1 = x + dx;				// 球的左上角x座標

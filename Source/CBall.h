@@ -8,7 +8,6 @@ namespace game_framework {
 	{
 	public:
 		CBall();
-		bool HitEraser(CEraser *eraser);						// 是否碰到擦子
 		bool IsAlive();											// 是否活著
 		void LoadBitmap();										// 載入圖形
 		void OnMove();											// 移動
