@@ -6,9 +6,9 @@
 #include "gamelib.h"
 #include "Character_madeline.h"
 
-/*
-遊戲角色物件
-*/
+//
+//遊戲角色物件
+//
 
 namespace game_framework {
 	
@@ -48,6 +48,11 @@ namespace game_framework {
 
 	void Character_madeline::LoadBitmap()
 	{
+		SpriteRight.SetDelayCount(5);
+		SpriteLeft.SetDelayCount(5);
+
+
+
 		//
 		//		角色靜態貼圖
 		//
