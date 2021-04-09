@@ -51,7 +51,7 @@ namespace game_framework {
 		isInAir = false;
 		isRising = true;
 
-		jumpVelocity = 10;
+		jumpVelocity = 15;
 		velocity = 0;
 
 		floor = FLOOR;
@@ -94,7 +94,7 @@ namespace game_framework {
 
 	void Character_madeline::OnMove()
 	{
-		const int STEP_SIZE = 3;
+		const int STEP_SIZE = 5;
 
 		//
 		//		й╣екил
