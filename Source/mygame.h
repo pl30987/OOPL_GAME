@@ -144,9 +144,9 @@ namespace game_framework {
 		CInteger		hits_left;	// 剩下的撞擊數
 		CBouncingBall   bball;		// 反覆彈跳的球
 
-		CMovingBitmap	sadFace;	// QQ臉
-		int				sadX, sadY;
-		CPractice		Map;		//變成地圖物件了!!
+		//CMovingBitmap	sadFace;	// QQ臉
+		//int				sadX, sadY;
+		//CPractice		Map;		//變成地圖物件了!!
 
 		Character_madeline		Character_madeline;		//主角madeline	玩家控制角色
 

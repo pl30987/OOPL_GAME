@@ -39,11 +39,22 @@ namespace game_framework {
 
 	void Character_madeline::Initialize()
 	{
+		const int FLOOR = 400;				// 地板座標
 		const int X_POS = 280;
-		const int Y_POS = 400;
 		x = X_POS;
-		y = Y_POS;
-		isMovingLeft = isMovingRight = isMovingUp = isMovingDown = false;
+		y = FLOOR - 1;
+		isMovingLeft = false;
+		isMovingRight = false;
+		isMovingUp = false;
+		isMovingDown = false;
+
+		isInAir = false;
+		isRising = true;
+
+		jumpVelocity = 10;
+		velocity = 0;
+
+		floor = FLOOR;
 	}
 
 	void Character_madeline::LoadBitmap()
@@ -83,7 +94,7 @@ namespace game_framework {
 
 	void Character_madeline::OnMove()
 	{
-		const int STEP_SIZE = 2;
+		const int STEP_SIZE = 3;
 
 		//
 		//		往左走
@@ -104,10 +115,44 @@ namespace game_framework {
 			x -= STEP_SIZE;
 		if (isMovingRight)
 			x += STEP_SIZE;
-		if (isMovingUp)
-			y -= STEP_SIZE;
-		if (isMovingDown)
-			y += STEP_SIZE;
+		if (isMovingUp) {
+			if (isInAir == false) {
+				isInAir = true;
+				velocity = jumpVelocity;
+			}
+		}
+		//if (isMovingDown)
+		//	y += STEP_SIZE;
+		
+		//
+		//		跳躍狀態
+		//
+		if (isInAir) {
+			if (isRising) {			// 上升狀態
+				if (velocity > 0) {
+					y -= velocity;	// 當速度 > 0時，y軸上升(移動velocity個點，velocity的單位為 點/次)
+					velocity--;		// 受重力影響，下次的上升速度降低
+				}
+				else {
+					isRising = false; // 當速度 <= 0，上升終止，下次改為下降
+					velocity = 1;	// 下降的初速(velocity)為1
+				}
+			}
+			else {				// 下降狀態
+				if (y < floor - 1) {  // 當y座標還沒碰到地板
+					y += velocity;	// y軸下降(移動velocity個點，velocity的單位為 點/次)
+					velocity++;		// 受重力影響，下次的下降速度增加
+				}
+				else {
+					y = floor - 1;  // 當y座標低於地板，更正為地板上
+					isRising = true;	// 探底反彈，下次改為上升
+					isInAir = false;
+					velocity = 0; // 重設上升初始速度
+				}
+			}
+		}
+
+
 	}
 
 	void Character_madeline::SetMovingDown(bool flag)

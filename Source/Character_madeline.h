@@ -1,7 +1,8 @@
 namespace game_framework {
 	/*
-	遊戲角色物件
+	*遊戲角色
 	*/
+
 
 	class Character_madeline {
 	public:
@@ -33,6 +34,15 @@ namespace game_framework {
 		bool isMovingLeft;			// 是否正在往左移動
 		bool isMovingRight;			// 是否正在往右移動
 		bool isMovingUp;			// 是否正在往上移動
+
+		bool isInAir;				// 是否在空中，決定可以跳躍的條件
+
+		
+		bool isRising;			// true表上升、false表下降
+		int jumpVelocity;		// 跳躍的力度
+		int velocity;			// 目前的速度(點/次)
+
+		int floor;				// 地板的Y座標 暫時性
 	};
 
 

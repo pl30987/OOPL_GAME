@@ -191,10 +191,10 @@ CGameMap::CGameMap()
 :X(20), Y(40), MW(120), MH(100)					// 給予地圖上左上角座標及每張小圖寬高
 {
 	int map_init[4][5] = {
-		{0, 0, 1, 0, 0},
-		{0, 1, 2, 1, 0},
-		{1, 2, 1, 2, 1},
-		{2, 1, 2, 1, 2}};
+		{0, 0, 0, 0, 0},
+		{1, 1, 1, 1, 1},
+		{1, 1, 1, 2, 1},
+		{2, 2, 2, 2, 2}};
 	for (int i = 0; i < 4; i++)
 		for (int j = 0; j < 5; j++)
 			map[i][j] = map_init[i][j];
@@ -299,7 +299,7 @@ CGameStateRun::CGameStateRun(CGame *g)
 {
 	ball = new CBall [NUMBALLS];
 
-	sadX = sadY = 0;
+	//sadX = sadY = 0;
 }
 
 CGameStateRun::~CGameStateRun()
@@ -325,7 +325,7 @@ void CGameStateRun::OnBeginState()
 		ball[i].SetIsAlive(true);
 	}
 
-	background.SetTopLeft(BACKGROUND_X,0);				// 設定背景的起始座標
+	//background.SetTopLeft(BACKGROUND_X,0);				// 設定背景的起始座標
 	help.SetTopLeft(0, SIZE_Y - help.Height());			// 設定說明圖的起始座標
 	hits_left.SetInteger(HITS_LEFT);					// 指定剩下的撞擊數
 	hits_left.SetTopLeft(HITS_LEFT_X,HITS_LEFT_Y);		// 指定剩下撞擊數的座標
@@ -347,15 +347,15 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	gamemap.OnMove();
 
 	//sadFace.SetTopLeft(300, 50);
-	if (sadX <= SIZE_Y) {
-		sadX += 5;
-		sadY += 1;
-	}
-	else {
-		sadX = sadY = 0;
-	}
-	sadFace.SetTopLeft(sadX, sadY);
-	Map.OnMove();
+	//if (sadX <= SIZE_Y) {
+	//	sadX += 5;
+	//	sadY += 1;
+	//}
+	//else {
+	//	sadX = sadY = 0;
+	//}
+	//sadFace.SetTopLeft(sadX, sadY);
+	//Map.OnMove();
 
 
 	//
@@ -365,9 +365,9 @@ void CGameStateRun::OnMove()							// 移動遊戲元素
 	//
 	// 移動背景圖的座標
 	//
-	if (background.Top() > SIZE_Y)
-		background.SetTopLeft(60 ,-background.Height());
-	background.SetTopLeft(background.Left(),background.Top()+1);
+	//if (background.Top() > SIZE_Y)
+	//	background.SetTopLeft(60 ,-background.Height());
+	//background.SetTopLeft(background.Left(),background.Top()+1);
 	//
 	// 移動球
 	//
@@ -409,8 +409,8 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	Character_madeline.LoadBitmap();
 
 	//練習載入臉
-	sadFace.LoadBitmap("Bitmaps\\sad.bmp", RGB(0,0,0));	//LoadBitmap(fileNAme, 指定為透明的顏色)
-	Map.LoadBitmap();
+	//sadFace.LoadBitmap("Bitmaps\\sad.bmp", RGB(0,0,0));	//LoadBitmap(fileNAme, 指定為透明的顏色)
+	//Map.LoadBitmap();
 
 	//練習載入地圖的圖形
 	gamemap.LoadBitmap();
@@ -427,7 +427,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	for (i = 0; i < NUMBALLS; i++)	
 		ball[i].LoadBitmap();								// 載入第i個球的圖形
 
-	background.LoadBitmap(IDB_BACKGROUND);					// 載入背景的圖形
+	//background.LoadBitmap(IDB_BACKGROUND);					// 載入背景的圖形
 	//
 	// 完成部分Loading動作，提高進度
 	//
@@ -438,7 +438,7 @@ void CGameStateRun::OnInit()  								// 遊戲的初值及圖形設定
 	//
 	help.LoadBitmap(IDB_HELP,RGB(255,255,255));				// 載入說明的圖形
 	corner.LoadBitmap(IDB_CORNER);							// 載入角落圖形
-	corner.ShowBitmap(background);							// 將corner貼到background
+	//corner.ShowBitmap(background);							// 將corner貼到background
 	bball.LoadBitmap();										// 載入圖形
 	hits_left.LoadBitmap();									
 	CAudio::Instance()->Load(AUDIO_DING,  "sounds\\ding.wav");	// 載入編號0的聲音ding.wav
@@ -589,7 +589,7 @@ void CGameStateRun::OnShow()
 	//
 	//  貼上背景圖、撞擊數、球、擦子、彈跳的球
 	//
-	background.ShowBitmap();			// 貼上背景圖
+	//background.ShowBitmap();			// 貼上背景圖
 	help.ShowBitmap();					// 貼上說明圖
 	hits_left.ShowBitmap();
 	for (int i=0; i < NUMBALLS; i++)
@@ -605,8 +605,8 @@ void CGameStateRun::OnShow()
 	corner.ShowBitmap();
 
 	//showface
-	sadFace.ShowBitmap();
-	Map.OnShow();
+	//sadFace.ShowBitmap();
+	//Map.OnShow();
 
 	//
 	//		貼上角色madeline
@@ -615,27 +615,27 @@ void CGameStateRun::OnShow()
 
 }
 
-CPractice::CPractice() {
-	x = y = 0;
-}
-
-void CPractice::OnMove() {
-	if (y <= SIZE_Y) {
-		x += 3;
-		y += 2;
-	}
-	else {
-		x = y = 0;
-	}
-}
-
-void CPractice::LoadBitmap() {
-	pic.LoadBitmap("Bitmaps\\normal.bmp", RGB(0,0,0));
-}
-
-void CPractice::OnShow() {
-	pic.SetTopLeft(x, y);
-	pic.ShowBitmap();
-}
+//CPractice::CPractice() {
+//	x = y = 0;
+//}
+//
+//void CPractice::OnMove() {
+//	if (y <= SIZE_Y) {
+//		x += 3;
+//		y += 2;
+//	}
+//	else {
+//		x = y = 0;
+//	}
+//}
+//
+//void CPractice::LoadBitmap() {
+//	pic.LoadBitmap("Bitmaps\\normal.bmp", RGB(0,0,0));
+//}
+//
+//void CPractice::OnShow() {
+//	pic.SetTopLeft(x, y);
+//	pic.ShowBitmap();
+//}
 
 }
