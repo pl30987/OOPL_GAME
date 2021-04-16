@@ -16,18 +16,18 @@ namespace game_framework {
 	//	block 24 x 24
 
 	GameMap::GameMap()
-		:X(10), Y(10), MW(24), MH(24)					// 給予地圖上左上角座標及每張小圖寬高
+		:X(20), Y(0), MW(24), MH(24), MAP_SIZE_H(20), MAP_SIZE_W(25)					// 給予地圖上左上角座標及每張小圖寬高
 	{
+
 		//簡易地圖
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 26; j++) {
-				if (j == 25) {
-					map[i][j] = 1;
-				}
-				else {
-					map[i][j] = 0;
-				}
+		for (int y = 0; y < 19; y++) {
+			for (int x = 0; x < 26; x++) {
+				map[y][x] = 0;
+
 			}
+		}
+		for (int x = 0; x < 26; x++) {
+				map[19][x] = 1;
 		}
 	}
 
@@ -38,15 +38,15 @@ namespace game_framework {
 
 	void GameMap::OnShow()
 	{
-		for (int i = 0; i < 20; i++)
-			for (int j = 0; j < 26; j++)
+		for (int y = 0; y < MAP_SIZE_H; y++)
+			for (int x = 0; x < MAP_SIZE_W; x++)
 			{
-				int tmp(map[i][j]);
+				int tmp(map[y][x]);
 				switch (tmp) {
 				case 0:
 					break;
 				case 1:
-					block_1.SetTopLeft(X + (MW * i), Y + (MH * j));
+					block_1.SetTopLeft(X + (MW * x), Y + (MH * y));
 					block_1.ShowBitmap();
 					break;
 				default:

@@ -10,6 +10,7 @@ namespace game_framework {
 	//	block 24 x 24
 	// map size is 20 x 26
 
+
 	class GameMap{
 	public:
 		GameMap();
@@ -18,6 +19,8 @@ namespace game_framework {
 		void OnMove();
 		~GameMap();					//解構子
 	protected:
+		const int MAP_SIZE_H;
+		const int MAP_SIZE_W;
 
 		CMovingBitmap block_1;		
 		int map[20][26];				// 建立一個地圖矩陣的index
