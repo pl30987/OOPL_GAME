@@ -10,45 +10,44 @@ namespace game_framework {
 
 	//
 	// 未完成
-	// 
+	// size
+	// madeline 48 x 48
 	//
+	//	block 24 x 24
 
 	GameMap::GameMap()
-		:X(20), Y(40), MW(120), MH(100)					// 給予地圖上左上角座標及每張小圖寬高
+		:X(10), Y(10), MW(24), MH(24)					// 給予地圖上左上角座標及每張小圖寬高
 	{
-		int map_init[4][5] = {
-			{0, 0, 0, 0, 0},
-			{1, 1, 1, 1, 1},
-			{1, 1, 1, 2, 1},
-			{2, 2, 2, 2, 2} };
-		for (int i = 0; i < 4; i++)
-			for (int j = 0; j < 5; j++)
-				map[i][j] = map_init[i][j];
-
-		random_num = 0;					//初始化隨機個數
+		//簡易地圖
+		for (int i = 0; i < 20; i++) {
+			for (int j = 0; j < 26; j++) {
+				if (j == 25) {
+					map[i][j] = 1;
+				}
+				else {
+					map[i][j] = 0;
+				}
+			}
+		}
 	}
 
 	void GameMap::LoadBitmap()
 	{
-		blue.LoadBitmap(IDB_BLUE);
-		green.LoadBitmap(IDB_GREEN);
+		block_1.LoadBitmap("Bitmaps\\block_texture\\block_1.bmp");
 	}
 
 	void GameMap::OnShow()
 	{
-		for (int i = 0; i < 5; i++)
-			for (int j = 0; j < 4; j++)
+		for (int i = 0; i < 20; i++)
+			for (int j = 0; j < 26; j++)
 			{
-				switch (map[j][i]) {
+				int tmp(map[i][j]);
+				switch (tmp) {
 				case 0:
 					break;
 				case 1:
-					blue.SetTopLeft(X + (MW * i), Y + (MH * j));
-					blue.ShowBitmap();
-					break;
-				case 2:
-					green.SetTopLeft(X + (MW * i), Y + (MH * j));
-					green.ShowBitmap();
+					block_1.SetTopLeft(X + (MW * i), Y + (MH * j));
+					block_1.ShowBitmap();
 					break;
 				default:
 					ASSERT(0);										//map陣列不該出現0, 1, 2以外的值

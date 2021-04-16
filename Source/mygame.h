@@ -43,6 +43,7 @@
 #include "CBouncingBall.h"
 
 #include "Character_madeline.h"
+#include "GameMap.h"
 
 namespace game_framework {
 	/////////////////////////////////////////////////////////////////////////////
@@ -74,44 +75,6 @@ namespace game_framework {
 	};
 
 
-	//用物件包裝
-	class CPractice {
-	public:
-		CPractice();
-		void LoadBitmap();
-		void OnMove();
-		void OnShow();
-
-	private:
-		CMovingBitmap pic;
-		int x, y;
-	};
-
-	// 這個Class提供地圖的構成
-
-	class CGameMap {
-	public:
-		CGameMap();
-		void LoadBitmap();				// 載入地圖
-		void OnShow();					// 顯示地圖
-
-		void OnMove();					//播放彈跳球動畫
-		void OnKeyDown(UINT);			//處理按鍵按下後的反應
-		void RandomBouncingBall();		//隨機彈跳球個數加入倒Map中
-		void InitializeBouncingBall(int, int, int);	//初始化彈跳球
-		~CGameMap();					//解構子
-	protected:
-		CMovingBitmap blue, green;		// 建立藍色地圖和綠色地圖
-		int map[4][5];					// 建立一個地圖矩陣的index
-		const int X, Y;					// 大地圖的左上角x, y座標
-		const int MW, MH;				// 每張小地圖的寬高度
-
-		CBouncingBall* bballs;			//CBouncingBall指標
-		int random_num;					//隨機個數
-	};
-
-
-
 	/////////////////////////////////////////////////////////////////////////////
 	// 這個class為遊戲的遊戲執行物件，主要的遊戲程式都在這裡
 	// 每個Member function的Implementation都要弄懂
@@ -134,19 +97,10 @@ namespace game_framework {
 		void OnMove();									// 移動遊戲元素
 		void OnShow();									// 顯示這個狀態的遊戲畫面
 	private:
-		CGameMap		gamemap;	// 地圖
-
-		const int		NUMBALLS;	// 球的總數
-		CMovingBitmap	background;	// 背景圖
-		CMovingBitmap	help;		// 說明圖
-		CBall			*ball;		// 球的陣列
-		CMovingBitmap	corner;		// 角落圖
-		CInteger		hits_left;	// 剩下的撞擊數
-		CBouncingBall   bball;		// 反覆彈跳的球
+		GameMap			gamemap;	// 地圖
 
 		//CMovingBitmap	sadFace;	// QQ臉
 		//int				sadX, sadY;
-		//CPractice		Map;		//變成地圖物件了!!
 
 		Character_madeline		Character_madeline;		//主角madeline	玩家控制角色
 
