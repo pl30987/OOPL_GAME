@@ -1,8 +1,4 @@
 namespace game_framework {
-	/*
-	*遊戲角色
-	*/
-
 
 	class Character_madeline {
 	public:
@@ -15,10 +11,13 @@ namespace game_framework {
 		void LoadBitmap();				// 載入圖形
 		void OnMove();					// 移動擦子
 		void OnShow();					// 將擦子圖形貼到畫面
+
+		//control
 		void SetMovingDown(bool flag);	// 設定是否正在往下移動
 		void SetMovingLeft(bool flag);	// 設定是否正在往左移動
 		void SetMovingRight(bool flag); // 設定是否正在往右移動
 		void SetMovingUp(bool flag);	// 設定是否正在往上移動
+
 		void SetXY(int nx, int ny);		// 設定擦子左上角座標
 	private:
 		//		madeline
@@ -36,12 +35,19 @@ namespace game_framework {
 		bool isMovingRight;			// 是否正在往右移動
 		bool isMovingUp;			// 是否正在往上移動
 
-		bool isInAir;				// 是否在空中，決定可以跳躍的條件
 
-		
+		// physics
+		bool isInAir;				// 是否在空中，決定可以跳躍的條件
 		bool isRising;			// true表上升、false表下降
-		int jumpVelocity;		// 跳躍的力度
-		int velocity;			// 目前的速度(點/次)
+		bool onFloor;
+		float velocity_x;			// 目前的速度(點/次)
+		float velocity_y;
+		float velocity_max;
+		float velocity_min;
+		float acceleration;
+		float drag;
+		float gravity;
+
 
 		int floor;				// 地板的Y座標 暫時性
 	};

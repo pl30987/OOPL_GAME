@@ -5,6 +5,7 @@
 #include "audio.h"
 #include "gamelib.h"
 #include "Character_madeline.h"
+#include "GameMap.h"
 
 //
 //遊戲角色物件
@@ -51,8 +52,13 @@ namespace game_framework {
 		isInAir = false;
 		isRising = true;
 
-		jumpVelocity = 15;
-		velocity = 0;
+		velocity_x = 0.f;
+		velocity_y = 0.f;
+		velocity_max = 10.f;
+		velocity_min = 1.5f;
+		acceleration = 3.f;
+		drag = 0.8f;
+		gravity = 4.f;
 
 		floor = FLOOR;
 	}
@@ -94,65 +100,56 @@ namespace game_framework {
 
 	void Character_madeline::OnMove()
 	{
-		const int STEP_SIZE = 5;
-
-		//
-		//		往左走
-		//
-		if (isMovingLeft == true && isMovingRight == false)
-			SpriteLeft.OnMove();
-		else
-			SpriteLeft.Reset();
-		//
-		//		往右走
-		//
-		if (isMovingLeft == false && isMovingRight == true)
-			SpriteRight.OnMove();
-		else
-			SpriteRight.Reset();
-
+		// 移動加速度
 		if (isMovingLeft)
-			x -= STEP_SIZE;
+			velocity_x = velocity_x - acceleration;
 		if (isMovingRight)
-			x += STEP_SIZE;
-		if (isMovingUp) {
-			if (isInAir == false) {
-				isInAir = true;
-				velocity = jumpVelocity;
-			}
+			velocity_x = velocity_x + acceleration;
+
+		// 限制移動速度
+		if (std::abs(velocity_x) > this->velocity_max) {
+			this->velocity_x = this->velocity_max * (this->velocity_x > 0.f ? 1.f : -1.f);
 		}
-		//if (isMovingDown)
-		//	y += STEP_SIZE;
+
+		// 移動衰減
+		this->velocity_x = this->velocity_x * this->drag;
+		if (std::abs(velocity_x) <= this->velocity_min) {
+			this->velocity_x = 0;
+		}
+		if (std::abs(velocity_y) <= this->velocity_min) {
+			this->velocity_y = 0;
+		}
+
+		// 最後位置設定
+		x = x + (int)velocity_x;
+		y = y + (int)velocity_y;
 		
-		//
+		/*
 		//		跳躍狀態
-		//
 		if (isInAir) {
 			if (isRising) {			// 上升狀態
-				if (velocity > 0) {
-					y -= velocity;	// 當速度 > 0時，y軸上升(移動velocity個點，velocity的單位為 點/次)
-					velocity--;		// 受重力影響，下次的上升速度降低
+				if (velocity_y > 0) {
+					y -= velocity_y;	// 當速度 > 0時，y軸上升(移動velocity個點，velocity的單位為 點/次)
+					velocity_y--;		// 受重力影響，下次的上升速度降低
 				}
 				else {
 					isRising = false; // 當速度 <= 0，上升終止，下次改為下降
-					velocity = 1;	// 下降的初速(velocity)為1
+					velocity_y = 1;	// 下降的初速(velocity)為1
 				}
 			}
 			else {				// 下降狀態
 				if (y < floor - 1) {  // 當y座標還沒碰到地板
-					y += velocity;	// y軸下降(移動velocity個點，velocity的單位為 點/次)
-					velocity++;		// 受重力影響，下次的下降速度增加
+					y += velocity_y;	// y軸下降(移動velocity個點，velocity的單位為 點/次)
+					velocity_y++;		// 受重力影響，下次的下降速度增加
 				}
 				else {
 					y = floor - 1;  // 當y座標低於地板，更正為地板上
 					isRising = true;	// 探底反彈，下次改為上升
 					isInAir = false;
-					velocity = 0; // 重設上升初始速度
+					velocity_y = 0; // 重設上升初始速度
 				}
 			}
-		}
-
-
+		}*/
 	}
 
 	void Character_madeline::SetMovingDown(bool flag)
@@ -180,11 +177,25 @@ namespace game_framework {
 		x = nx; y = ny;
 	}
 
+
 	void Character_madeline::OnShow()
 	{
+		// 人物貼圖播放
+		//		往左走
+		if (isMovingLeft == true && isMovingRight == false)
+			SpriteLeft.OnMove();
+		else
+			SpriteLeft.Reset();
 		//
+		//		往右走
+		//
+		if (isMovingLeft == false && isMovingRight == true)
+			SpriteRight.OnMove();
+		else
+			SpriteRight.Reset();
+
+
 		//		人物sprites切換
-		//
 		if (isMovingUp == true && isMovingDown == false)
 		{
 			SpriteLookUp.SetTopLeft(x, y);

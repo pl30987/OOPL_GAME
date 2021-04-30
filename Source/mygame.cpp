@@ -222,45 +222,12 @@ namespace game_framework {
 
 	void CGameStateRun::OnMove()							// 移動遊戲元素
 	{
-		//
 		// 	   移動主角madeline
-		// 
 		Character_madeline.OnMove();
 
 		gamemap.OnMove();
 
 
-		//
-		// 如果希望修改cursor的樣式，則將下面程式的commment取消即可
-		//
-		// SetCursor(AfxGetApp()->LoadCursor(IDC_GAMECURSOR));
-		//
-		// 移動背景圖的座標
-		//
-		//if (background.Top() > SIZE_Y)
-		//	background.SetTopLeft(60 ,-background.Height());
-		//background.SetTopLeft(background.Left(),background.Top()+1);
-
-		//
-		// 判斷擦子是否碰到球
-		//
-		/*
-
-		for (i=0; i < NUMBALLS; i++)
-			if (ball[i].IsAlive() && ball[i].HitEraser(&eraser)) {
-				ball[i].SetIsAlive(false);
-				CAudio::Instance()->Play(AUDIO_DING);
-				hits_left.Add(-1);
-				//
-				// 若剩餘碰撞次數為0，則跳到Game Over狀態
-				//
-				if (hits_left.GetInteger() <= 0) {
-					CAudio::Instance()->Stop(AUDIO_LAKE);	// 停止 WAVE
-					CAudio::Instance()->Stop(AUDIO_NTUT);	// 停止 MIDI
-					GotoGameState(GAME_STATE_OVER);
-				}
-			}
-		*/
 
 	}
 
