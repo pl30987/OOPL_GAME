@@ -224,8 +224,13 @@ namespace game_framework {
 	{
 		// 	   移動主角madeline
 		Character_madeline.OnMove();
-
 		gamemap.OnMove();
+
+		// 碰撞處裡
+		if (Character_madeline.GetY2() > 0) {
+			Character_madeline.ResetVelocityY();
+			Character_madeline.SetXY(Character_madeline.GetX1(), 480 - Character_madeline.GetY2() + Character_madeline.GetY1());
+		}
 
 
 

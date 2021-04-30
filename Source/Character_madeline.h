@@ -19,6 +19,10 @@ namespace game_framework {
 		void SetMovingUp(bool flag);	// 設定是否正在往上移動
 
 		void SetXY(int nx, int ny);		// 設定擦子左上角座標
+
+		//physics
+		void ResetVelocityX();
+		void ResetVelocityY();
 	private:
 		//		madeline
 		CMovingBitmap SpriteStand;			//靜止

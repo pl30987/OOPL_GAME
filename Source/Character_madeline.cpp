@@ -102,17 +102,21 @@ namespace game_framework {
 	{
 		// 移動加速度
 		if (isMovingLeft)
-			velocity_x = velocity_x - acceleration;
+			this->velocity_x -= this->acceleration;
 		if (isMovingRight)
-			velocity_x = velocity_x + acceleration;
+			this->velocity_x += this->acceleration;
 
 		// 限制移動速度
-		if (std::abs(velocity_x) > this->velocity_max) {
+		if (std::abs(this->velocity_x) > this->velocity_max) {
 			this->velocity_x = this->velocity_max * (this->velocity_x > 0.f ? 1.f : -1.f);
 		}
 
+		// 物理
 		// 移動衰減
+		this->velocity_y += 1.0f + this->gravity;
+
 		this->velocity_x = this->velocity_x * this->drag;
+
 		if (std::abs(velocity_x) <= this->velocity_min) {
 			this->velocity_x = 0;
 		}
@@ -124,32 +128,9 @@ namespace game_framework {
 		x = x + (int)velocity_x;
 		y = y + (int)velocity_y;
 		
-		/*
-		//		跳躍狀態
-		if (isInAir) {
-			if (isRising) {			// 上升狀態
-				if (velocity_y > 0) {
-					y -= velocity_y;	// 當速度 > 0時，y軸上升(移動velocity個點，velocity的單位為 點/次)
-					velocity_y--;		// 受重力影響，下次的上升速度降低
-				}
-				else {
-					isRising = false; // 當速度 <= 0，上升終止，下次改為下降
-					velocity_y = 1;	// 下降的初速(velocity)為1
-				}
-			}
-			else {				// 下降狀態
-				if (y < floor - 1) {  // 當y座標還沒碰到地板
-					y += velocity_y;	// y軸下降(移動velocity個點，velocity的單位為 點/次)
-					velocity_y++;		// 受重力影響，下次的下降速度增加
-				}
-				else {
-					y = floor - 1;  // 當y座標低於地板，更正為地板上
-					isRising = true;	// 探底反彈，下次改為上升
-					isInAir = false;
-					velocity_y = 0; // 重設上升初始速度
-				}
-			}
-		}*/
+		// 更新碰撞
+
+
 	}
 
 	void Character_madeline::SetMovingDown(bool flag)
@@ -177,6 +158,15 @@ namespace game_framework {
 		x = nx; y = ny;
 	}
 
+	void Character_madeline::ResetVelocityX()
+	{
+		this->velocity_x = 0;
+	}
+
+	void Character_madeline::ResetVelocityY()
+	{
+		this->velocity_y = 0;
+	}
 
 	void Character_madeline::OnShow()
 	{
