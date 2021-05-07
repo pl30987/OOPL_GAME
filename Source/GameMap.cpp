@@ -19,7 +19,7 @@ namespace game_framework {
 		:X(20), Y(0), MW(24), MH(24), MAP_SIZE_H(20), MAP_SIZE_W(25)					// 給予地圖上左上角座標及每張小圖寬高
 	{
 
-		//簡易地圖
+		/*簡易地圖
 		for (int y = 0; y < 19; y++) {
 			for (int x = 0; x < 26; x++) {
 				map[y][x] = 0;
@@ -29,6 +29,15 @@ namespace game_framework {
 		for (int x = 0; x < 26; x++) {
 			map[19][x] = 1;
 		}
+		//*/
+
+		//*三角
+		for (int y = 0; y < 20; y++) {
+			for (int x = 0; x < 26; x++) {
+				map[y][x] = 1 ? x + y >= 19 && (y > 11 || y < 9) : 0;
+			}
+		}
+		//*/
 	}
 
 	void GameMap::LoadBitmap()
@@ -65,14 +74,15 @@ namespace game_framework {
 		for (int y = 0; y < MAP_SIZE_H; y++)
 			for (int x = 0; x < MAP_SIZE_W; x++)
 			{
-				const int block_x_pos = x * 24;
-				const int block_y_pos = y * 24;
+				// 取得方塊實際位置
+				const int block_x_pos = x * 24 + X;
+				const int block_y_pos = y * 24 + Y;
 
 				// AABB
 				if (map[y][x] != 0 &&
 					x_pos + width - 1 > block_x_pos &&
 					x_pos < block_x_pos + 23 &&
-					y_pos + width - 1 > block_y_pos &&
+					y_pos + height - 1 > block_y_pos &&
 					y_pos < block_y_pos + 23
 					)
 				{

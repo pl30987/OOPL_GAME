@@ -40,15 +40,13 @@ namespace game_framework {
 
 	void Character_madeline::Initialize()
 	{
-		x = 320;
-		y = 200;
+		x = 100;
+		y = 10;
 		isMovingLeft = false;
 		isMovingRight = false;
 		isMovingUp = false;
 		isMovingDown = false;
-
-		isInAir = false;
-		isRising = true;
+		isJumping = false;
 
 		velocity_x = 0.f;
 		velocity_y = 0.f;
@@ -96,11 +94,16 @@ namespace game_framework {
 
 	void Character_madeline::OnMove()
 	{
+		// 移動邏輯參考 https://forum.gamer.com.tw/Co.php?bsn=60602&sn=2484
+
 		// 移動加速度
 		if (isMovingLeft)
 			this->velocity_x -= this->acceleration;
 		if (isMovingRight)
 			this->velocity_x += this->acceleration;
+		if (isJumping && isOnGround())
+			this->velocity_y -= 35.f;
+
 
 		// 限制移動速度
 		if (std::abs(this->velocity_x) > this->velocity_max) {
@@ -157,6 +160,11 @@ namespace game_framework {
 		isMovingUp = flag;
 	}
 
+	void Character_madeline::setJump(bool flag)
+	{
+		isJumping = flag;
+	}
+
 	void Character_madeline::SetXY(int nx, int ny)
 	{
 		x = nx; y = ny;
@@ -180,6 +188,11 @@ namespace game_framework {
 	bool Character_madeline::isCollidedY(int y_delta)
 	{
 		return this->gamemap->isCollided(x, y + y_delta, 48, 48);
+	}
+
+	bool Character_madeline::isOnGround()
+	{
+		return this->gamemap->isCollided(x, y, 48, 53);
 	}
 
 	void Character_madeline::OnShow()

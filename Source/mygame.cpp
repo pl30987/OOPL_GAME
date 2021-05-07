@@ -308,17 +308,18 @@ namespace game_framework {
 
 		if (nChar == KEY_Z)
 		{
-
+			// jump
+			Character_madeline.setJump(true);
 		}
 
 		if (nChar == KEY_X)
 		{
-
+			// dash
 		}
 
 		if (nChar == KEY_C)
 		{
-
+			// grab
 		}
 	}
 
@@ -355,17 +356,18 @@ namespace game_framework {
 
 		if (nChar == KEY_Z)
 		{
-
+			// jump
+			Character_madeline.setJump(false);
 		}
 
 		if (nChar == KEY_X)
 		{
-
+			// dash
 		}
 
 		if (nChar == KEY_C)
 		{
-
+			// grab
 		}
 	}
 

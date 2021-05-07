@@ -23,6 +23,7 @@ namespace game_framework {
 		void SetMovingLeft(bool flag);	// 設定是否正在往左移動
 		void SetMovingRight(bool flag); // 設定是否正在往右移動
 		void SetMovingUp(bool flag);	// 設定是否正在往上移動
+		void setJump(bool flag);		// 
 
 		void SetXY(int nx, int ny);		// 設定擦子左上角座標
 
@@ -31,6 +32,8 @@ namespace game_framework {
 		void ResetVelocityY();
 		bool isCollidedX(int x_delta);
 		bool isCollidedY(int y_delta);
+		bool isOnGround();				// 在腳色腳底下用一個48x5的BOX來偵測
+		
 
 	private:
 		//		madeline
@@ -47,12 +50,10 @@ namespace game_framework {
 		bool isMovingLeft;			// 是否正在往左移動
 		bool isMovingRight;			// 是否正在往右移動
 		bool isMovingUp;			// 是否正在往上移動
+		bool isJumping;				// 是否要進行跳躍
 
 
 		// physics
-		bool isInAir;				// 是否在空中，決定可以跳躍的條件
-		bool isRising;			// true表上升、false表下降
-		bool onFloor;
 		float velocity_x;			// 目前的速度(點/次)
 		float velocity_y;
 		float velocity_max;
