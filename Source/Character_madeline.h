@@ -1,4 +1,8 @@
+#ifndef CHARACTER_MADELINE
+#define CHARACTER_MADELINE
 namespace game_framework {
+
+	class GameMap;
 
 	class Character_madeline {
 	public:
@@ -12,6 +16,8 @@ namespace game_framework {
 		void OnMove();					// 移動擦子
 		void OnShow();					// 將擦子圖形貼到畫面
 
+		void SetGameMap(GameMap * gamemap);
+
 		//control
 		void SetMovingDown(bool flag);	// 設定是否正在往下移動
 		void SetMovingLeft(bool flag);	// 設定是否正在往左移動
@@ -23,6 +29,9 @@ namespace game_framework {
 		//physics
 		void ResetVelocityX();
 		void ResetVelocityY();
+		bool isCollidedX(int x_delta);
+		bool isCollidedY(int y_delta);
+
 	private:
 		//		madeline
 		CMovingBitmap SpriteStand;			//靜止
@@ -52,9 +61,12 @@ namespace game_framework {
 		float drag;
 		float gravity;
 
+		GameMap * gamemap;
+
 
 		int floor;				// 地板的Y座標 暫時性
 	};
 
 
 }
+#endif

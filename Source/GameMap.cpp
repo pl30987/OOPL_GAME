@@ -27,7 +27,7 @@ namespace game_framework {
 			}
 		}
 		for (int x = 0; x < 26; x++) {
-				map[19][x] = 1;
+			map[19][x] = 1;
 		}
 	}
 
@@ -58,6 +58,28 @@ namespace game_framework {
 	void GameMap::OnMove()
 	{
 
+	}
+
+	bool GameMap::isCollided(int x_pos, int y_pos, int width, int height)
+	{
+		for (int y = 0; y < MAP_SIZE_H; y++)
+			for (int x = 0; x < MAP_SIZE_W; x++)
+			{
+				const int block_x_pos = x * 24;
+				const int block_y_pos = y * 24;
+
+				// AABB
+				if (map[y][x] != 0 &&
+					x_pos + width - 1 > block_x_pos &&
+					x_pos < block_x_pos + 23 &&
+					y_pos + width - 1 > block_y_pos &&
+					y_pos < block_y_pos + 23
+					)
+				{
+					return true;
+				}
+			}
+		return false;
 	}
 
 	GameMap::~GameMap()

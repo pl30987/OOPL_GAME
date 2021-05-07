@@ -4,8 +4,8 @@
 #include <ddraw.h>
 #include "audio.h"
 #include "gamelib.h"
-#include "Character_madeline.h"
 #include "GameMap.h"
+#include "Character_madeline.h"
 
 //
 //遊戲角色物件
@@ -40,10 +40,8 @@ namespace game_framework {
 
 	void Character_madeline::Initialize()
 	{
-		const int FLOOR = 400;				// 地板座標
-		const int X_POS = 280;
-		x = X_POS;
-		y = FLOOR - 1;
+		x = 320;
+		y = 200;
 		isMovingLeft = false;
 		isMovingRight = false;
 		isMovingUp = false;
@@ -59,8 +57,6 @@ namespace game_framework {
 		acceleration = 3.f;
 		drag = 0.8f;
 		gravity = 4.f;
-
-		floor = FLOOR;
 	}
 
 	void Character_madeline::LoadBitmap()
@@ -125,11 +121,19 @@ namespace game_framework {
 		}
 
 		// 最後位置設定
-		x = x + (int)velocity_x;
-		y = y + (int)velocity_y;
-		
-		// 更新碰撞
+		if (isCollidedX((int)velocity_x) == true) {
+			ResetVelocityX();
+		}
+		else {
+			x = x + (int)velocity_x;
+		}
 
+		if (isCollidedY((int)velocity_y) == true) {
+			ResetVelocityY();
+		}
+		else {
+			y = y + (int)velocity_y;
+		}
 
 	}
 
@@ -166,6 +170,16 @@ namespace game_framework {
 	void Character_madeline::ResetVelocityY()
 	{
 		this->velocity_y = 0;
+	}
+
+	bool Character_madeline::isCollidedX(int x_delta)
+	{
+		return this->gamemap->isCollided(x + x_delta, y, 48, 48);
+	}
+
+	bool Character_madeline::isCollidedY(int y_delta)
+	{
+		return this->gamemap->isCollided(x, y + y_delta, 48, 48);
 	}
 
 	void Character_madeline::OnShow()
@@ -211,5 +225,10 @@ namespace game_framework {
 			SpriteStand.SetTopLeft(x, y);
 			SpriteStand.ShowBitmap();
 		}
+	}
+
+	void Character_madeline::SetGameMap(GameMap * gamemap)
+	{
+		this->gamemap = gamemap;
 	}
 }

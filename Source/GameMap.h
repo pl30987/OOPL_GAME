@@ -1,3 +1,5 @@
+#ifndef GAMEMAP
+#define GAMEMAP
 namespace game_framework {
 
 	//
@@ -14,10 +16,13 @@ namespace game_framework {
 	class GameMap{
 	public:
 		GameMap();
+		~GameMap();					//解構子
 		void LoadBitmap();				// 載入地圖
 		void OnShow();					// 顯示地圖
 		void OnMove();
-		~GameMap();					//解構子
+
+		// 碰撞偵測
+		bool isCollided(int x_pos, int y_pos, int height, int width);
 	protected:
 		const int MAP_SIZE_H;
 		const int MAP_SIZE_W;
@@ -28,3 +33,4 @@ namespace game_framework {
 		const int MW, MH;				// 每張小地圖的寬高度
 	};
 }
+#endif
