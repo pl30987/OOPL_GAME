@@ -98,7 +98,7 @@ namespace game_framework {
 				if (tile_id == -1)
 					continue;
 				if (tile_id < -1 || tile_id >= 55)
-					ASSERT(-1)
+					ASSERT(0);
 				tiled.at(tile_id).SetTopLeft(X + (MW * x), Y + (MH * y));
 				tiled.at(tile_id).ShowBitmap();
 
@@ -120,7 +120,7 @@ namespace game_framework {
 				const int block_y_pos = y * 24 + Y;
 
 				// AABB
-				if (map[y][x] != 0 &&
+				if (map[y][x] != -1 &&
 					x_pos + width - 1 > block_x_pos &&
 					x_pos < block_x_pos + 23 &&
 					y_pos + height - 1 > block_y_pos &&

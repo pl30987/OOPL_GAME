@@ -34,6 +34,8 @@ namespace game_framework {
 		bool isCollidedY(int y_delta);
 		bool isOnGround();				// 在腳色腳底下用一個48x5的BOX來偵測
 		
+		//debug
+		void DEBUG_setPlayerPos(int x_pos, int y_pos);
 
 	private:
 		//		madeline

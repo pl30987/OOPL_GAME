@@ -40,8 +40,8 @@ namespace game_framework {
 
 	void Character_madeline::Initialize()
 	{
-		x = 100;
-		y = 10;
+		x = 72;
+		y = 240;
 		isMovingLeft = false;
 		isMovingRight = false;
 		isMovingUp = false;
@@ -193,6 +193,11 @@ namespace game_framework {
 	bool Character_madeline::isOnGround()
 	{
 		return this->gamemap->isCollided(x, y, 48, 53);
+	}
+
+	void Character_madeline::DEBUG_setPlayerPos(int x_pos, int y_pos)
+	{
+		
 	}
 
 	void Character_madeline::OnShow()
