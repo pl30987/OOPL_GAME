@@ -309,6 +309,7 @@ namespace game_framework {
 		if (nChar == KEY_Z)
 		{
 			// grab
+			Character_madeline.SetGrab(true);
 		}
 
 		if (nChar == KEY_X)
@@ -319,7 +320,7 @@ namespace game_framework {
 		if (nChar == KEY_C)
 		{
 			// jump
-			Character_madeline.setJump(true);
+			Character_madeline.SetJump(true);
 		}
 	}
 
@@ -357,6 +358,7 @@ namespace game_framework {
 		if (nChar == KEY_Z)
 		{
 			// grab
+			Character_madeline.SetGrab(false);
 		}
 
 		if (nChar == KEY_X)
@@ -367,7 +369,7 @@ namespace game_framework {
 		if (nChar == KEY_C)
 		{
 			// jump
-			Character_madeline.setJump(false);
+			Character_madeline.SetJump(false);
 		}
 	}
 

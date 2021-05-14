@@ -23,7 +23,8 @@ namespace game_framework {
 		void SetMovingLeft(bool flag);	// 設定是否正在往左移動
 		void SetMovingRight(bool flag); // 設定是否正在往右移動
 		void SetMovingUp(bool flag);	// 設定是否正在往上移動
-		void setJump(bool flag);		// 
+		void SetJump(bool flag);		// 
+		void SetGrab(bool flag);		// 
 
 		void SetXY(int nx, int ny);		// 設定擦子左上角座標
 
@@ -33,6 +34,7 @@ namespace game_framework {
 		bool isCollidedX(int x_delta);
 		bool isCollidedY(int y_delta);
 		bool isOnGround();				// 在腳色腳底下用一個48x5的BOX來偵測
+		bool isOnWall();				// 偵測是否在攀牆 腳色左右各延伸出5x36的BOX來偵測
 		
 
 	private:
@@ -51,6 +53,7 @@ namespace game_framework {
 		bool isMovingRight;			// 是否正在往右移動
 		bool isMovingUp;			// 是否正在往上移動
 		bool isJumping;				// 是否要進行跳躍
+		bool isGrabbing;			// 是否正在抓取
 
 
 		// physics

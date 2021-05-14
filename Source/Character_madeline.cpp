@@ -47,6 +47,7 @@ namespace game_framework {
 		isMovingUp = false;
 		isMovingDown = false;
 		isJumping = false;
+		isGrabbing = false;
 
 		velocity_x = 0.f;
 		velocity_y = 0.f;
@@ -54,7 +55,7 @@ namespace game_framework {
 		velocity_min = 1.5f;
 		acceleration = 3.f;
 		drag = 0.8f;
-		gravity = 4.f;
+		gravity = 3.f;
 	}
 
 	void Character_madeline::LoadBitmap()
@@ -101,20 +102,31 @@ namespace game_framework {
 			this->velocity_x -= this->acceleration;
 		if (isMovingRight)
 			this->velocity_x += this->acceleration;
+		/*
+		if (isMovingUp)
+			this->velocity_y -= this->acceleration/2.0f;
+		if (isMovingDown)
+			this->velocity_y += this->acceleration/2.0f;
+		//*/
 		if (isJumping && isOnGround())
-			this->velocity_y -= 35.f;
-
+			this->velocity_y -= 30.f;
+		if (isJumping && isOnWall() && velocity_y > 1.0f)
+			this->velocity_y -= 20.f;
 
 		// 限制移動速度
 		if (std::abs(this->velocity_x) > this->velocity_max) {
 			this->velocity_x = this->velocity_max * (this->velocity_x > 0.f ? 1.f : -1.f);
 		}
+		if (std::abs(this->velocity_x) > this->velocity_max) {
+			this->velocity_y = this->velocity_max * 3.0f * (this->velocity_x > 0.f ? 1.f : -1.f);
+		}
 
 		// 物理
 		// 移動衰減
-		this->velocity_y += 1.0f + this->gravity;
+		this->velocity_y += this->gravity;
 
 		this->velocity_x = this->velocity_x * this->drag;
+
 
 		if (std::abs(velocity_x) <= this->velocity_min) {
 			this->velocity_x = 0;
@@ -160,9 +172,14 @@ namespace game_framework {
 		isMovingUp = flag;
 	}
 
-	void Character_madeline::setJump(bool flag)
+	void Character_madeline::SetJump(bool flag)
 	{
 		isJumping = flag;
+	}
+
+	void Character_madeline::SetGrab(bool flag)
+	{
+		isGrabbing = flag;
 	}
 
 	void Character_madeline::SetXY(int nx, int ny)
@@ -193,6 +210,11 @@ namespace game_framework {
 	bool Character_madeline::isOnGround()
 	{
 		return this->gamemap->isCollided(x, y, 48, 53);
+	}
+
+	bool Character_madeline::isOnWall()
+	{
+		return this->gamemap->isCollided(x - 5, y, 58, 36);
 	}
 
 	void Character_madeline::OnShow()
