@@ -66,21 +66,19 @@ namespace game_framework {
 
 	void GameMap::LoadBitmap()
 	{
-		block_1.LoadBitmap("Bitmaps\\tile\\032.bmp", RGB(255, 0, 255));
-		//tiled.push_back(new CMovingBitmap().LoadBitmap("Bitmaps\\tile\\032.bmp", RGB(255, 0, 255)));
-		//block_1.LoadBitmap("Bitmaps\\sad.bmp", RGB(0, 0, 0));
-		
-		/*
+		// 初始化tiled
+		tiled.resize(55);
+		int i = 0;
 		stringstream path;
-		char* path_s;
-		for (int i = 0; i < 55; i++) {
+		vector<CMovingBitmap>::iterator iter;
+		for (iter = tiled.begin(); iter < tiled.end(); iter++) {
 			path << "Bitmaps\\tile\\" << (i % 1000) / 100 << (i % 100) / 10 << i % 10 << ".bmp";
-			strcpy(path_s, path.str().c_str());
-			tiled[i].LoadBitmap(path_s, RGB(255, 0, 255));
-			//_snprintf(path, sizeof(path), "Bitmaps\\tile\\%d%d%d.bmp", (i % 1000)/100, (i % 100)/10, i % 10);
-			//tiled[i].LoadBitmap(path, RGB(255, 0, 255));
-		}
-		//*/
+			tiled[i].LoadBitmap((char *)(path.str().c_str()), RGB(255, 0, 255));
+			// reset stringstream
+			path.str("");
+			path.clear();
+			i++;
+		}		
 	}
 
 	void GameMap::OnShow()
@@ -93,10 +91,10 @@ namespace game_framework {
 				case 0:
 					break;
 				case 1:
-					//tiled.at(1).SetTopLeft(X + (MW * x), Y + (MH * y));
-					//tiled.at(1).ShowBitmap();
-					block_1.SetTopLeft(X + (MW * x), Y + (MH * y));
-					block_1.ShowBitmap();
+					tiled.at(26).SetTopLeft(X + (MW * x), Y + (MH * y));
+					tiled.at(26).ShowBitmap();
+					//block_1.SetTopLeft(X + (MW * x), Y + (MH * y));
+					//block_1.ShowBitmap();
 					break;
 				default:
 					ASSERT(0);										//map陣列不該出現0, 1, 2以外的值
