@@ -31,14 +31,15 @@ namespace game_framework {
 		}
 		//*/
 
-		//*三角
+		/*三角
 		for (int y = 0; y < 20; y++) {
 			for (int x = 0; x < 26; x++) {
 				map[y][x] = 1 ? x + y >= 19 && (y > 11 || y < 9) : 0;
 			}
 		}
 		//*/
-		int init_map[20][25] = {
+
+		const int init_map[20][25] = {
 		{-1, 16, 5, 21, 16, 16, 16, 21, 21, 21, 21, 14, -1, -1, 31, 31, 36, 36, 36, 36, 5, 36, 36, 51, 51},
 		{ 13, 21, 6, -1, 20, 21, 22, -1, -1, -1, -1, 15, 16, 28, 36, 37, -1, -1, -1, -1, 6, -1, -1, -1, -1 },
 		{ 32, -1, 6, -1, -1, -1, 6, -1, -1, -1, -1, 30, 31, 32, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1, -1 },
@@ -61,6 +62,11 @@ namespace game_framework {
 		{ -1, -1, 31, 31, 31, 31, 31, 31, 31, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 }
 		};
 
+		for (int y = 0; y < 20; y++) {
+			for (int x = 0; x < 26; x++) {
+				map[y][x] = init_map[y][x];
+			}
+		}
 
 	}
 
@@ -86,19 +92,16 @@ namespace game_framework {
 		for (int y = 0; y < MAP_SIZE_H; y++)
 			for (int x = 0; x < MAP_SIZE_W; x++)
 			{
-				int tmp(map[y][x]);
-				switch (tmp) {
-				case 0:
-					break;
-				case 1:
-					tiled.at(26).SetTopLeft(X + (MW * x), Y + (MH * y));
-					tiled.at(26).ShowBitmap();
-					//block_1.SetTopLeft(X + (MW * x), Y + (MH * y));
-					//block_1.ShowBitmap();
-					break;
-				default:
-					ASSERT(0);										//map陣列不該出現0, 1, 2以外的值
-				}
+
+				
+				int tile_id(map[y][x]);
+				if (tile_id == -1)
+					continue;
+				if (tile_id < -1 || tile_id >= 55)
+					ASSERT(-1)
+				tiled.at(tile_id).SetTopLeft(X + (MW * x), Y + (MH * y));
+				tiled.at(tile_id).ShowBitmap();
+
 			}
 	}
 
