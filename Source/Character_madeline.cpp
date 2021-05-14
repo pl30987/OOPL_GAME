@@ -96,7 +96,8 @@ namespace game_framework {
 	void Character_madeline::OnMove()
 	{
 		// 移動邏輯參考 https://forum.gamer.com.tw/Co.php?bsn=60602&sn=2484
-
+		// TODO: 考慮以狀態機來控制腳色動作
+		// 
 		// 移動加速度
 		if (isMovingLeft)
 			this->velocity_x -= this->acceleration;
