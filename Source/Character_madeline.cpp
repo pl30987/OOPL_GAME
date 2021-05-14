@@ -195,11 +195,6 @@ namespace game_framework {
 		return this->gamemap->isCollided(x, y, 48, 53);
 	}
 
-	void Character_madeline::DEBUG_setPlayerPos(int x_pos, int y_pos)
-	{
-		
-	}
-
 	void Character_madeline::OnShow()
 	{
 		// 人物貼圖播放

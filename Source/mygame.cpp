@@ -308,8 +308,7 @@ namespace game_framework {
 
 		if (nChar == KEY_Z)
 		{
-			// jump
-			Character_madeline.setJump(true);
+			// grab
 		}
 
 		if (nChar == KEY_X)
@@ -319,7 +318,8 @@ namespace game_framework {
 
 		if (nChar == KEY_C)
 		{
-			// grab
+			// jump
+			Character_madeline.setJump(true);
 		}
 	}
 
@@ -356,8 +356,7 @@ namespace game_framework {
 
 		if (nChar == KEY_Z)
 		{
-			// jump
-			Character_madeline.setJump(false);
+			// grab
 		}
 
 		if (nChar == KEY_X)
@@ -367,7 +366,8 @@ namespace game_framework {
 
 		if (nChar == KEY_C)
 		{
-			// grab
+			// jump
+			Character_madeline.setJump(false);
 		}
 	}
 

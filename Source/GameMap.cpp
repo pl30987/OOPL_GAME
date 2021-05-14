@@ -16,8 +16,11 @@ namespace game_framework {
 	//	block 24 x 24
 
 	GameMap::GameMap()
-		:X(20), Y(0), MW(24), MH(24), MAP_SIZE_H(20), MAP_SIZE_W(25)					// 給予地圖上左上角座標及每張小圖寬高
+		:MAP_X(0), MAP_Y(0),
+		TILED_WIDTH(24), TILED_HEIGHT(24),
+		MAP_SIZE_H(20), MAP_SIZE_W(25)
 	{
+
 
 		/*簡易地圖
 		for (int y = 0; y < 19; y++) {
@@ -89,17 +92,16 @@ namespace game_framework {
 
 	void GameMap::OnShow()
 	{
+		int tile_id;
 		for (int y = 0; y < MAP_SIZE_H; y++)
 			for (int x = 0; x < MAP_SIZE_W; x++)
 			{
-
-				
-				int tile_id(map[y][x]);
+				tile_id = map[y][x];
 				if (tile_id == -1)
 					continue;
 				if (tile_id < -1 || tile_id >= 55)
 					ASSERT(0);
-				tiled.at(tile_id).SetTopLeft(X + (MW * x), Y + (MH * y));
+				tiled.at(tile_id).SetTopLeft(MAP_X + (TILED_WIDTH * x), MAP_Y + (TILED_HEIGHT * y));
 				tiled.at(tile_id).ShowBitmap();
 
 			}
@@ -110,21 +112,21 @@ namespace game_framework {
 
 	}
 
-	bool GameMap::isCollided(int x_pos, int y_pos, int width, int height)
+	bool GameMap::isCollided(int pos_x, int pos_y, int width, int height)
 	{
 		for (int y = 0; y < MAP_SIZE_H; y++)
 			for (int x = 0; x < MAP_SIZE_W; x++)
 			{
 				// 取得方塊實際位置
-				const int block_x_pos = x * 24 + X;
-				const int block_y_pos = y * 24 + Y;
+				const int block_pos_x = x * 24 + MAP_X;
+				const int block_pos_y = y * 24 + MAP_Y;
 
 				// AABB
 				if (map[y][x] != -1 &&
-					x_pos + width - 1 > block_x_pos &&
-					x_pos < block_x_pos + 23 &&
-					y_pos + height - 1 > block_y_pos &&
-					y_pos < block_y_pos + 23
+					pos_x + width - 1 > block_pos_x &&
+					pos_x < block_pos_x + 23 &&
+					pos_y + height - 1 > block_pos_y &&
+					pos_y < block_pos_y + 23
 					)
 				{
 					return true;
